@@ -1,0 +1,79 @@
+/* ---------------------------- Background gradient animation ---------------------------- */
+.animated-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, #3b82f6, #8b5cf6, #ec4899, #22d3ee);
+  background-size: 400% 400%;
+  opacity: 0.85;
+  z-index: 0;
+  animation: bgFlow 15s ease infinite;
+}
+
+/* ---------------------------- Lines ---------------------------- */
+.animated-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,0.2),
+    rgba(255,255,255,0.2) 1px,
+    transparent 1px,
+    transparent 20px
+  );
+  animation: lineMove 10s ease-in-out infinite;
+}
+
+/* ---------------------------- Shapes / Squares / Circles ---------------------------- */
+.animated-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid white;
+  border-radius: 50%;
+  opacity: 0.2;
+  animation: shapeRotate 20s linear infinite;
+}
+
+/* ---------------------------- Animations ---------------------------- */
+@keyframes bgFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes lineMove {
+  0%, 100% { transform: translateX(0); opacity: 0.6; }
+  50% { transform: translateX(50px); opacity: 1; }
+}
+
+@keyframes shapeRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ---------------------------- Glow behind profile image ---------------------------- */
+@keyframes picGlow {
+  0% { background: radial-gradient(circle at 30% 30%, #9333ea, transparent 70%); }
+  50% { background: radial-gradient(circle at 70% 70%, #3b82f6, transparent 70%); }
+  100% { background: radial-gradient(circle at 30% 30%, #9333ea, transparent 70%); }
+}
+
+.animate-picGlow {
+  animation: picGlow 8s ease-in-out infinite;
+  filter: blur(60px);
+  opacity: 0.7;
+}
+
+/* ---------------------------- Text shine ---------------------------- */
+.animate-text-shine {
+  background-size: 200% auto;
+  animation: textShine 6s linear infinite;
+}
+
+@keyframes textShine {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}

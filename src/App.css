@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Global Reset --- */
+* {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #0f172a;
+  scroll-behavior: smooth;
+}
+
+/* Remove any default gap between components */
+main,
+section,
+header,
+footer,
+div {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Prevent white line or space around navbar */
+nav {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1;
+  border: none;
+}
