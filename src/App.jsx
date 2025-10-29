@@ -21,7 +21,7 @@ import Messages from "./pages/admin/Messages";
 import Profile from "./pages/admin/Profile";
 import AdminBlogs from "./pages/admin/AdminBlogs.jsx";
 import SocialLinks from "./pages/admin/SocialLinks";
-import ShowcaseAdmin from "./pages/admin/ShowcaseAdmin";
+import ShowcaseAdmin from "./pages/admin/showcaseAdmin";
 import AdminSkills from "./pages/admin/AdminSkills";
 import AdminServices from "./pages/admin/AdminServices";
 
