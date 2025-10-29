@@ -11,7 +11,7 @@ import {
   FaTwitter,
   FaGlobe,
 } from "react-icons/fa";
-import "./animated.css";
+import "./Animated.css";
 
 export default function About() {
   const [profile, setProfile] = useState(null);
