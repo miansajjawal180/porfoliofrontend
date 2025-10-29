@@ -3,7 +3,7 @@ import { getPublicProfiles } from "../services/api/profileApi";
 import Chatbot from "../components/Chatbot";
 import { FaMapMarkerAlt, FaBriefcase, FaProjectDiagram } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import "./animated.css";
+import "./Animated.css";
 
 export default function Home() {
   const [profile, setProfile] = useState(null);
