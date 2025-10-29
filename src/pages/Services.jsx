@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { fetchPublicServices } from "../services/api/servicesApi";
 import Chatbot from "../components/Chatbot";
-import "./animated.css";
+import "./Animated.css";
 
 const Services = () => {
   const [services, setServices] = useState([]);
