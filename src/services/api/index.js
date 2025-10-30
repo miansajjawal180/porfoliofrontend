@@ -1,11 +1,12 @@
 import axios from "axios";
 import { getToken } from "../../utils/auth";
 
-const API_BASE_URL = "https://portfoliobackend-livid.vercel.app/api"; // deployed backend
+// ✅ Updated deployed backend URL
+const API_BASE_URL = "https://portfoliobackend-lake-eta.vercel.app/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  // ✅ remove withCredentials if only using JWT header
+  // If you only use JWT header, withCredentials is not needed
 });
 
 // Attach token automatically
