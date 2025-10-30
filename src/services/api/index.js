@@ -2,7 +2,8 @@ import axios from "axios";
 import { getToken } from "../../utils/auth";
 
 // ✅ Updated deployed backend URL
-const API_BASE_URL = "https://portfoliobackend-lake-eta.vercel.app/api";
+const API_BASE_URL = "https://portfoliobackend-v1nw.vercel.app/api";
+
 
 const api = axios.create({
   baseURL: API_BASE_URL,
