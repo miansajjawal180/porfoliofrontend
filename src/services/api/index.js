@@ -8,6 +8,7 @@ const API_BASE_URL = "https://portfoliobackend-livid.vercel.app/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true, // ✅ allow cookies/token exchange
 });
 
 // Attach token automatically
