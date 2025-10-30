@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser, setAuthToken } from "../services/Api";
+import { loginUser, setAuthToken } from "../services/api/index";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,26 +15,15 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
-      // Call backend API
       const data = await loginUser({ email, password });
 
-      // Save JWT token in localStorage
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", data.token); // Save token
+      setAuthToken(data.token);                   // Attach token for API
 
-      // Set token for future API requests
-      setAuthToken(data.token);
-
-      // Redirect to admin dashboard
       navigate("/admin/dashboard");
     } catch (err) {
       console.error(err);
-
-      // Mobile-safe network error handling
-      if (!err.response) {
-        setError("Network error. Please check your connection or try again.");
-      } else {
-        setError(err.response.data?.message || "Login failed");
-      }
+      setError(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -44,11 +32,8 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-900 via-indigo-800 to-blue-800">
       <div className="bg-[#1E1B4B]/90 backdrop-blur-lg shadow-2xl rounded-2xl p-10 w-full max-w-md text-white border border-indigo-700">
-        <h1 className="text-3xl font-extrabold mb-8 text-center tracking-wide">
-          Admin Login
-        </h1>
+        <h1 className="text-3xl font-extrabold mb-8 text-center tracking-wide">Login</h1>
 
-        {/* Error message */}
         {error && (
           <div className="bg-red-500/20 text-red-300 px-4 py-2 rounded-lg mb-4 border border-red-400/30">
             {error}
@@ -57,30 +42,26 @@ export default function AdminLogin() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-gray-300 mb-2 text-sm font-medium">
-              Email
-            </label>
+            <label className="block text-gray-300 mb-2 text-sm font-medium">Email</label>
             <input
               type="email"
               className="w-full px-4 py-3 rounded-lg bg-[#0F172A] text-gray-100 placeholder-gray-400 border border-indigo-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
               required
+              placeholder="Enter your email"
             />
           </div>
 
           <div>
-            <label className="block text-gray-300 mb-2 text-sm font-medium">
-              Password
-            </label>
+            <label className="block text-gray-300 mb-2 text-sm font-medium">Password</label>
             <input
               type="password"
               className="w-full px-4 py-3 rounded-lg bg-[#0F172A] text-gray-100 placeholder-gray-400 border border-indigo-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
               required
+              placeholder="Enter your password"
             />
           </div>
 
@@ -93,9 +74,7 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        <p className="text-sm text-gray-400 mt-6 text-center">
-          © {new Date().getFullYear()} MSDEV Admin Panel
-        </p>
+        <p className="text-sm text-gray-400 mt-6 text-center">© {new Date().getFullYear()} MSDEV Admin Panel</p>
       </div>
     </div>
   );

@@ -1,13 +1,12 @@
 import axios from "axios";
 import { getToken } from "../../utils/auth";
 
-// ✅ Updated deployed backend URL
+// ✅ Updated backend URL
 const API_BASE_URL = "https://portfoliobackend-v1nw.vercel.app/api";
-
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  // If you only use JWT header, withCredentials is not needed
+  // withCredentials: true,  // remove unless using cookies
 });
 
 // Attach token automatically
@@ -19,16 +18,13 @@ api.interceptors.request.use((config) => {
 
 // Helper to manually set token
 export const setAuthToken = (token) => {
-  if (token) {
-    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  } else {
-    delete api.defaults.headers.common["Authorization"];
-  }
+  if (token) api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  else delete api.defaults.headers.common["Authorization"];
 };
 
 export default api;
 
-// Auth API
+// Auth APIs
 export const loginUser = async (credentials) => {
   const res = await api.post("/auth/login", credentials);
   return res.data;
@@ -39,17 +35,5 @@ export const getMe = async () => {
   return res.data;
 };
 
-// Re-export all other APIs
-export * from "./authApi";
-export * from "./adminApi";
-export * from "./projectApi";
-export * from "./updateApi";
-export * from "./messageApi";
-export * from "./fileApi";
-export * from "./socialApi";
-export * from "./profileApi";
-export * from "./showcaseApi";
-export * from "./servicesApi";
-export * from "./openaiApi";
-export * from "./blogApi";
-export * from "./skillsApi";
+
+
