@@ -16,65 +16,71 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
+      // Call backend API
       const data = await loginUser({ email, password });
 
-      // Save token
+      // Save JWT token in localStorage
       localStorage.setItem("token", data.token);
+
+      // Set token for future API requests
       setAuthToken(data.token);
 
+      // Redirect to admin dashboard
       navigate("/admin/dashboard");
     } catch (err) {
       console.error(err);
-      setError(
-        err.response?.data?.message ||
-        err.message ||
-        "Login failed. Please try again."
-      );
+
+      // Mobile-safe network error handling
+      if (!err.response) {
+        setError("Network error. Please check your connection or try again.");
+      } else {
+        setError(err.response.data?.message || "Login failed");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-900 via-indigo-800 to-blue-800 px-4">
-      <div className="bg-[#1E1B4B]/90 backdrop-blur-lg shadow-2xl rounded-2xl p-8 sm:p-10 w-full max-w-md text-white border border-indigo-700">
-        <h1 className="text-3xl font-extrabold mb-6 text-center tracking-wide">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-900 via-indigo-800 to-blue-800">
+      <div className="bg-[#1E1B4B]/90 backdrop-blur-lg shadow-2xl rounded-2xl p-10 w-full max-w-md text-white border border-indigo-700">
+        <h1 className="text-3xl font-extrabold mb-8 text-center tracking-wide">
           Admin Login
         </h1>
 
+        {/* Error message */}
         {error && (
-          <div className="bg-red-500/20 text-red-300 px-4 py-2 rounded-lg mb-4 border border-red-400/30 text-sm">
+          <div className="bg-red-500/20 text-red-300 px-4 py-2 rounded-lg mb-4 border border-red-400/30">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-gray-300 mb-1 text-sm font-medium">
+            <label className="block text-gray-300 mb-2 text-sm font-medium">
               Email
             </label>
             <input
               type="email"
-              autoFocus
-              className="w-full px-4 py-3 rounded-lg bg-[#0F172A] text-gray-100 placeholder-gray-400 border border-indigo-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-200"
+              className="w-full px-4 py-3 rounded-lg bg-[#0F172A] text-gray-100 placeholder-gray-400 border border-indigo-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
               placeholder="Enter your email"
+              required
             />
           </div>
 
           <div>
-            <label className="block text-gray-300 mb-1 text-sm font-medium">
+            <label className="block text-gray-300 mb-2 text-sm font-medium">
               Password
             </label>
             <input
               type="password"
-              className="w-full px-4 py-3 rounded-lg bg-[#0F172A] text-gray-100 placeholder-gray-400 border border-indigo-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-200"
+              className="w-full px-4 py-3 rounded-lg bg-[#0F172A] text-gray-100 placeholder-gray-400 border border-indigo-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
               placeholder="Enter your password"
+              required
             />
           </div>
 

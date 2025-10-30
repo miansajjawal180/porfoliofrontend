@@ -1,14 +1,11 @@
-// src/services/api/index.js
 import axios from "axios";
 import { getToken } from "../../utils/auth";
 
-// Auto-detect environment
-const API_BASE_URL = "https://portfoliobackend-livid.vercel.app/api";
-
+const API_BASE_URL = "https://portfoliobackend-livid.vercel.app/api"; // deployed backend
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  withCredentials: true, // ✅ allow cookies/token exchange
+  // ✅ remove withCredentials if only using JWT header
 });
 
 // Attach token automatically
@@ -18,7 +15,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Export helper to manually set token
+// Helper to manually set token
 export const setAuthToken = (token) => {
   if (token) {
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -28,6 +25,17 @@ export const setAuthToken = (token) => {
 };
 
 export default api;
+
+// Auth API
+export const loginUser = async (credentials) => {
+  const res = await api.post("/auth/login", credentials);
+  return res.data;
+};
+
+export const getMe = async () => {
+  const res = await api.get("/auth/me");
+  return res.data;
+};
 
 // Re-export all other APIs
 export * from "./authApi";
